@@ -1,0 +1,18 @@
+Package: wsep.t2
+Title: WSEP Tier 2 
+Version: 0.0.0.9000
+Authors@R: 
+    person("Matthew", "Bayly", , "mbayly@essa.com", role = c("aut", "cre"))
+Description: Watershed Status Evaluation Protocol (WSEP) Tier 2 Field-based monitoring methods.
+License: MIT + file LICENSE
+Depends:
+    R (>= 4.0)
+Imports:
+    sf
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+LazyData: true
