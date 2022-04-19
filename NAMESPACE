@@ -2,3 +2,4 @@
 
 export(constrain_streams)
 export(utm_projection)
+importFrom(magrittr,"%>%")

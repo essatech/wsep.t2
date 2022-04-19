@@ -8,10 +8,15 @@ License: MIT + file LICENSE
 Depends:
     R (>= 4.0)
 Imports:
-    sf
+    sf,
+    igraph,
+    rgeos,
+    magrittr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+URL: https://github.com/essatech/wsep.t2
+BugReports: https://github.com/essatech/wsep.t2/issues
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
