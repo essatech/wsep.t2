@@ -1,42 +1,7 @@
-# wsep.t2 #
+test_that("readme works", {
 
-WSEP (Watershed Status Evaluation Protocol) Tier 2 Field sampling protocol and design R-package. The WSEP Tier 2 uses a probabilistic sample design to select sampling sites from the watershed. Each of the three components (fish passage, sediment delivery, and riparian/stream channel) use a different sample design, however they share underlying spatial datasets. These spatial layers should be compiled and processed early on to inform reconnaissance and planning. The WSEP Tier 2 R-package (wsep.t2) can be used to help process and assemble the spatial data needed to generate sampling sites for a watershed of interest.
-
-## Installation
-
-The easiest way to install the `wsep.t2` package is from within the [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) using `remotes::install_github()`. At this time the package has not been published to CRAN so the default `install.packages()` will not work. Instead use remotes (or devtools) to install the packge directly from GitHub:
-
-``` r
-# You may need to install remotes
-library(remotes)
-remotes::install_github("essatech/wsep.t2")
-library(wsep.t2)
-```
-
-## Example Usage ##
-
-An example dataset is included in the wsep.t2 package for the Tsolum River watershed in Courtenay British Columbia, but the model can be run on any watershed on interest. It is expected that users will start with a streamline network from the BCFWA (BC Freshwater Atlas) clipped to their watershed of interest. Another key data layer to get started is the roads vector line dataset within each watershed. The following section provides as example for the Tsolum, but it is expected that users will substitute for their own watershed of interest.
-
-### Import Stream and Road Data Layers ###
-
-```r
-  # Run with sample dataset
-  
-  data(TsolumStreams)
-  strm <- TsolumStreams
-  
-  data(TsolumRoads)
-  roads <- TsolumRoads
-
-  # Import your own data here (uncomment lines)
-  # library(sf)
-  # strm <- st_read(dsn = "my_watershed.gdb", layer = "my_streams")
-  # roads <- st_read(dsn = "my_watershed.gdb", layer = "my_roads")
-  
-```
-### Create the Stream Layer ###
-
-```r
+  #---------------------------------
+  # CREATE THE STREAM LAYER
 
   # Load the WSEP Tier 2 R-package
   library(wsep.t2)
@@ -146,11 +111,10 @@ An example dataset is included in the wsep.t2 package for the Tsolum River water
   # unique identifier (e.g., WatershedName_SD_B_001), coordinates of
   # start point and end point, segment length, and Strata.
 
-```
 
 
-### Project Components ###
 
-* ...
-* ...
+
+
+})
 
