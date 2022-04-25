@@ -201,6 +201,8 @@ constrain_streams <- function(strm = NA,
     this_path <- spath$vpath[which(pl == min(pl))][[1]]
     strm_ids <- as.numeric(names(this_path))
 
+    if(length(strm_ids) == 0) { next }
+
     # Not the tail piece below confluence
     strm_ids <- strm_ids[1:(length(strm_ids) - 1)]
 
