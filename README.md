@@ -96,7 +96,7 @@ Prior to sampling sites across a watershed several pre-processing steps are nece
   # Finalize and adjust with any additional filters
 
 ```
-<img src='man/figures/constrained_stream.PNG' align="center" height="350" style="padding: 10px;"/>
+<img src='man/figures/constrained_stream.PNG' align="center" height="450" style="padding: 10px;"/>
 
 
 ### Define Strata as Stream Order ###
@@ -141,7 +141,7 @@ Site Type and strata: Generate a random sample from the list of stream crossings
 
 ```
 
-<img src='man/figures/site_type_a.PNG' align="center" height="350" style="padding: 10px;"/>
+<img src='man/figures/site_type_a.PNG' align="center" height="450" style="padding: 10px;"/>
 
 
 ### Site Type B: Road Proximity ###
@@ -191,7 +191,7 @@ Sample streams in close proximity to roads.
 
 ```
 
-<img src='man/figures/site_type_b.PNG' align="center" height="350" style="padding: 10px;"/>
+<img src='man/figures/site_type_b.PNG' align="center" height="450" style="padding: 10px;"/>
 
 ### References ###
 
