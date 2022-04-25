@@ -155,5 +155,20 @@ test_that("readme works", {
   testthat::expect_true(all(names(type_b) == c("points", "line_segments")))
 
 
+  if(FALSE) {
+
+    # Output directory
+    output_dir <- "C:/Users/mbayly/Desktop/delete/my_sites"
+
+    export_sites(output_dir = output_dir,
+                 site_type_a = site_type_a,
+                 type_b = type_b,
+                 export_csv = TRUE,
+                 export_shp = TRUE,
+                 export_kml = TRUE)
+  }
+
+
+
 })
 
