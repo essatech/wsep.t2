@@ -173,13 +173,31 @@ Sample streams in close proximity to roads.
 <img src='man/figures/site_type_b.PNG' align="center" height="450" style="padding: 10px;"/>
 
 
+## Site Type C: Riparian (Component 3) ##
+
+There are several site types for this component. This section provides guidance on how to generate the list of sample sites from the spatial layers above. Generate a GRTS sample from the list of stream crossings for each of the two strata (<3rd order vs. ≥ 3rd order).
+
+```r
+  site_type_c <- strm_crossings_grts(n = 20, strm = ca_strm, roads = roads, stream_order = 'STREAM_ORDER')
+  
+  # -------------------------------------------
+  # (Optional) visualize
+  plot(sf::st_geometry(strm_plot), col = "darkblue", main = "Site Type C (riparian-crossings)")
+  plot(sf::st_geometry(road_plot), add = TRUE, col = "burlywood")
+  plot(sf::st_geometry(site_type_c), add = TRUE, col = ifelse(site_type_b$strata == "stratum_1", "black", "red"), pch = 19)
+  legend("topright", c("roads", "streams", "stratum 1", "stratum 2"), col = c("burlywood", "darkblue", "black", "red"), lwd = c(1, 1, NA, NA), pch = c(NA, NA, 19, 19))
+``` 
+
+<img src='man/figures/site_type_c.PNG' align="center" height="450" style="padding: 10px;"/>
+
 ```r
   # (Optional) Visualize with Mapview
   # install.packages("mapview")
   # library(mapview)
   # road_plot$col <- 1
-  # mapview(list(strm_plot["strata"], road_plot, site_type_a["strata"], site_type_b["strata"]))
+  # mapview(list(strm_plot["strata"], road_plot, site_type_a["strata"], site_type_b["strata"], site_type_c["strata"]))
 ```
+<img src='man/figures/site_type_all.PNG' align="center" height="450" style="padding: 10px;"/>
 
 ## Export Data ##
 
@@ -192,6 +210,7 @@ Finally, when all the sampling frames (above) have been generated it is possible
     export_sites(output_dir = output_dir,
                  site_type_a = site_type_a,
                  type_b = type_b,
+                 site_type_c = site_type_c,
                  export_csv = TRUE,
                  export_shp = TRUE,
                  export_kml = TRUE)

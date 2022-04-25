@@ -148,11 +148,19 @@ test_that("readme works", {
          pch = c(NA, NA, 19, 19))
 
 
+  site_type_c <- strm_crossings_grts(n = 20, strm = ca_strm, roads = roads, stream_order = 'STREAM_ORDER')
+
+   plot(sf::st_geometry(strm_plot), col = "darkblue", main = "Site Type C (riparian-crossings)")
+  plot(sf::st_geometry(road_plot), add = TRUE, col = "burlywood")
+  plot(sf::st_geometry(site_type_c), add = TRUE, col = ifelse(site_type_b$strata == "stratum_1", "black", "red"), pch = 19)
+  legend("topright", c("roads", "streams", "stratum 1", "stratum 2"), col = c("burlywood", "darkblue", "black", "red"), lwd = c(1, 1, NA, NA), pch = c(NA, NA, 19, 19))
 
 
   # Run tests
   testthat::expect_true(nrow(site_type_a) > 0)
   testthat::expect_true(all(names(type_b) == c("points", "line_segments")))
+  testthat::expect_true(nrow(site_type_c) > 0)
+
 
 
   if(FALSE) {
@@ -163,6 +171,7 @@ test_that("readme works", {
     export_sites(output_dir = output_dir,
                  site_type_a = site_type_a,
                  type_b = type_b,
+                 site_type_c = site_type_c,
                  export_csv = TRUE,
                  export_shp = TRUE,
                  export_kml = TRUE)

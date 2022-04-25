@@ -8,6 +8,7 @@ export_sites(
   output_dir = NA,
   site_type_a = NA,
   type_b = NA,
+  site_type_c = NA,
   export_csv = TRUE,
   export_shp = TRUE,
   export_kml = TRUE
@@ -16,9 +17,11 @@ export_sites(
 \arguments{
 \item{output_dir}{String. Local file path the an output directory on your computer.}
 
-\item{site_type_a}{Sample Sites Type A. sf data frame returned from grouped_random_sample()}
+\item{site_type_a}{Sample Sites Type A. sf data frame returned from \code{grouped_random_sample()}}
 
-\item{type_b}{Sample Sites of Type B and line segments. Object returned from road_proximity_sample().}
+\item{type_b}{Sample Sites of Type B and line segments. Object returned from \code{road_proximity_sample()}.}
+
+\item{site_type_c}{Sample Sites Type C. sf data frame returned from \code{strm_crossings_grts()}}
 
 \item{export_csv}{Boolean. Should a csv file be exported to the output directory.}
 
@@ -34,10 +37,4 @@ Export sampling sites for field programs
 }
 \details{
 Define an output directory to export field sampling sites. Choose from available output formats. Note that when exporting to KML and SHP file format the data will be re-projected to latitude/longitude (EPSG: 4326).
-}
-\examples{
-\dontrun{
-}
-
-
 }

@@ -7,8 +7,9 @@
 #' Define an output directory to export field sampling sites. Choose from available output formats. Note that when exporting to KML and SHP file format the data will be re-projected to latitude/longitude (EPSG: 4326).
 #'
 #' @param output_dir String. Local file path the an output directory on your computer.
-#' @param site_type_a Sample Sites Type A. sf data frame returned from grouped_random_sample()
-#' @param type_b Sample Sites of Type B and line segments. Object returned from road_proximity_sample().
+#' @param site_type_a Sample Sites Type A. sf data frame returned from `grouped_random_sample()`
+#' @param type_b Sample Sites of Type B and line segments. Object returned from `road_proximity_sample()`.
+#' @param site_type_c Sample Sites Type C. sf data frame returned from `strm_crossings_grts()`
 #' @param export_csv Boolean. Should a csv file be exported to the output directory.
 #' @param export_shp Boolean. Should a shp (shape file) file be exported to the output directory.
 #' @param export_kml Boolean. Should a kml file be exported to the output directory.
@@ -16,15 +17,13 @@
 #' @return
 #' Populates the export directory with output files
 #'
-#' @examples
-#'\dontrun{
-#'}
 #'
 #'
 #' @export
 export_sites <- function(output_dir = NA,
                          site_type_a = NA,
                          type_b = NA,
+                         site_type_c = NA,
                          export_csv = TRUE,
                          export_shp = TRUE,
                          export_kml = TRUE) {
@@ -50,6 +49,10 @@ export_sites <- function(output_dir = NA,
   stb <- type_b$points
   stb <- stb[, c("site_id", "strata", "type", "length_m")]
 
+  stc <- site_type_c
+  stc <- stc[, c("site_id", "strata", "type", "length_m")]
+
+
   rename_geometry <- function(g, name) {
     current = attr(g, "sf_column")
     names(g)[names(g)==current] = name
@@ -59,9 +62,18 @@ export_sites <- function(output_dir = NA,
 
   sta <- rename_geometry(sta, "geomf")
   stb <- rename_geometry(stb, "geomf")
+  stc <- rename_geometry(stc, "geomf")
 
+  if(nrow(stb) > 0) {
+    allsites <- rbind(sta, stb)
+  } else {
+    allsites <- sta
+  }
 
-  allsites <- rbind(sta, stb)
+  if(nrow(stc) > 0) {
+    allsites <- rbind(allsites, stc)
+  }
+
 
   allsites <- suppressWarnings({ sf::st_cast(allsites, "POINT") })
 
