@@ -11,6 +11,7 @@ Imports:
     sf,
     igraph,
     rgeos,
+    dplyr,
     magrittr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

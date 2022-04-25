@@ -4,7 +4,12 @@
 \alias{constrain_streams}
 \title{Constrain Streams}
 \usage{
-constrain_streams(strm = NA, length_remove = 500, length_trim = 200)
+constrain_streams(
+  strm = NA,
+  length_remove = 500,
+  length_trim = 200,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{strm}{A streamlines dataset of class \code{sf} from the BCFWA.}
@@ -14,6 +19,8 @@ order tributaries that should be removed. Defaults to 500m.}
 
 \item{length_trim}{Numeric. Length in meters of upstream portion of
 first order tributaries that should be removed. Defaults to 200m.}
+
+\item{verbose}{Boolean. Should function be run in verbose mode. Defaults to \code{FALSE}.}
 }
 \value{
 An constrained streamlines dataset of class \code{sf}.

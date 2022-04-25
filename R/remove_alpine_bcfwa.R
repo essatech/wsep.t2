@@ -50,6 +50,10 @@
 #' @export
 remove_alpine_bcfwa <- function(strm = NA, elevation_threshold = 1000) {
 
+  # Bind for non-standard
+  ID <- NULL
+  Z <- NULL
+
   # Keep streams that are under threshold
   crds <- sf::st_coordinates(strm)
   crds <- as.data.frame(crds)

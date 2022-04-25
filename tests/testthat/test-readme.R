@@ -1,10 +1,12 @@
 test_that("readme works", {
 
+
   #---------------------------------
   # CREATE THE STREAM LAYER
 
   # Load the WSEP Tier 2 R-package
   library(wsep.t2)
+  library(dplyr)
 
   # Load the sample data set for the
   # Tsolum River near Courtenay BC
@@ -69,7 +71,7 @@ test_that("readme works", {
   # Ensure roads match projection
   roads <- utm_projection(data = TsolumRoads)
   # Define crossings as the intersection
-  crossings <- sf::st_intersection(ca_strm, roads)
+  crossings <- suppressWarnings({ sf::st_intersection(ca_strm, roads) })
 
 
   #--------------------------------------------
@@ -81,16 +83,24 @@ test_that("readme works", {
   # following fields: unique identifier (e.g.,
   # WatershedName_SD_A_001), coordinates, and Strata.
 
-  site_type_a <- grouped_random_sample(data = crossings,
-                        group_name = "strata",
-                        n = 20)
+  site_type_a <- grouped_random_sample(
+                    data = crossings,
+                    group_name = "strata",
+                    n = 20)
+
+
 
   # (Optional) visualize
-  strm_plot <- sf::st_zm(strm)
+  strm_plot <- sf::st_zm(ca_strm)
   road_plot <- sf::st_zm(roads)
-  plot(sf::st_geometry(strm1_plot), col = "darkblue", main = "Site Type A")
-  plot(sf::st_geometry(road_plot), add = TRUE, col = "lightgrey")
-  plot(sf::st_geometry(site_type_a), add = TRUE, col = as.factor(site_type_a$strata), pch = 19)
+  plot(sf::st_geometry(strm_plot), col = "darkblue", main = "Site Type A (stream crossing)")
+  plot(sf::st_geometry(road_plot), add = TRUE, col = "burlywood")
+  plot(sf::st_geometry(site_type_a), add = TRUE, col = ifelse(site_type_a$strata == "stratum_1", "black", "red"), pch = 19)
+  legend("topright",
+         c("roads", "streams", "stratum 1", "stratum 2"),
+         col = c("burlywood", "darkblue", "black", "red"),
+         lwd = c(1, 1, NA, NA),
+         pch = c(NA, NA, 19, 19))
 
   #--------------------------------------------
   # Site Type B (road proximity):
@@ -111,9 +121,38 @@ test_that("readme works", {
   # unique identifier (e.g., WatershedName_SD_B_001), coordinates of
   # start point and end point, segment length, and Strata.
 
+  type_b <- road_proximity_sample(
+    n = 20,
+    strm = ca_strm,
+    roads = roads,
+    buffer_s1_m = 50,
+    buffer_s2_m = 90,
+    buffer_crossings_m = 100,
+    small_strm_segment_m = 50,
+    stream_order = "STREAM_ORDER"
+  )
+
+  site_type_b <- type_b$points
+
+
+  # (Optional) visualize
+  strm_plot <- sf::st_zm(ca_strm)
+  road_plot <- sf::st_zm(roads)
+  plot(sf::st_geometry(strm_plot), col = "darkblue", main = "Site Type B (road proximity)")
+  plot(sf::st_geometry(road_plot), add = TRUE, col = "burlywood")
+  plot(sf::st_geometry(site_type_b), add = TRUE, col = ifelse(site_type_a$strata == "stratum_1", "black", "red"), pch = 19)
+  legend("topright",
+         c("roads", "streams", "stratum 1", "stratum 2"),
+         col = c("burlywood", "darkblue", "black", "red"),
+         lwd = c(1, 1, NA, NA),
+         pch = c(NA, NA, 19, 19))
 
 
 
+
+  # Run tests
+  testthat::expect_true(nrow(site_type_a) > 0)
+  testthat::expect_true(all(names(type_b) == c("points", "line_segments")))
 
 
 })

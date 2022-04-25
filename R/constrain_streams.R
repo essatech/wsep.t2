@@ -29,6 +29,7 @@
 #' order tributaries that should be removed. Defaults to 500m.
 #' @param length_trim Numeric. Length in meters of upstream portion of
 #' first order tributaries that should be removed. Defaults to 200m.
+#' @param verbose Boolean. Should function be run in verbose mode. Defaults to `FALSE`.
 #' @importFrom magrittr %>%
 #'
 #' @return
@@ -41,8 +42,10 @@
 #'
 #'
 #' @export
-constrain_streams <- function(strm = NA, length_remove = 500,
-                              length_trim = 200) {
+constrain_streams <- function(strm = NA,
+                              length_remove = 500,
+                              length_trim = 200,
+                              verbose = FALSE) {
 
   # Bind for non-standard
   . <- NULL
@@ -301,8 +304,12 @@ constrain_streams <- function(strm = NA, length_remove = 500,
       break
     }
 
-    print(paste0("Processing segments: ", i,
-                 " of ", length(source_nodes)))
+
+    if(verbose) {
+      print(paste0("Processing segments: ", i,
+                   " of ", length(source_nodes)))
+    }
+
 
   }
   # end of first order stream loop

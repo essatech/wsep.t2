@@ -3,20 +3,20 @@
 #' @description
 #' Take a simple random sample by a group
 #'
+#' @details
+#' Note that there is no repeat sampling or replacement. If the sample size `n` exceeds the number of stream crossings in a stratum, then only the limited number of available crossings will be returned.
+#'
 #' @param data A data object of class `sf`.
-#' @param group_name String. Column name for the strata to sample across
-#' @param n Sample size n.
+#' @param group_name String. Column name for the strata to sample across. It is assumed that `group_name` is `strata` and the values are `stratum_1` for stream segments less than 3rd order and `stratum_2` for stream segments 3rd order and greater.
+#' @param n Sample size n for each stratum
 #'
 #' @return
 #' A object of class `sf` of sample features.
 #'
-#' @examples
-#'\dontrun{
-#'}
-#'
-#'
 #' @export
 grouped_random_sample <- function(data = NA, group_name = "strata", n = 20) {
+
+  tmp_group_name <- NULL
 
   vals <- data[, group_name]
   sf::st_geometry(vals) <- NULL
@@ -42,6 +42,8 @@ grouped_random_sample <- function(data = NA, group_name = "strata", n = 20) {
   site_types$tmp_group_name <- NULL
 
   site_types <- site_types[, c("site_id", group_name)]
+
+  site_types$type <- "type_a"
 
   return(site_types)
 
