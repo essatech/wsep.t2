@@ -8,6 +8,10 @@ Stable](https://img.shields.io/badge/lifecycle-stable.svg)](https://www.tidyvers
 [![CRAN](http://www.r-pkg.org/badges/version/MNAI.CPBT)](https://cran.r-project.org/package=MNAI.CPBT)
 <!-- badges: end -->
 
+
+[![Video Tutorial](https://img.youtube.com/vi/lt6KL8EK0OQ/0.jpg)](https://www.youtube.com/watch?v=lt6KL8EK0OQ)
+
+
 The WSEP Tier 2 field sampling package uses a probabilistic sample design to select sampling sites from the watershed. Each of the three components (fish passage, sediment delivery, and riparian/stream channel) use a different sample design; however, they share underlying spatial data sets. These spatial layers should be compiled and processed early on to inform reconnaissance and planning. The WSEP Tier 2 R-package (wsep.t2) can be used to help process and assemble the spatial data needed to generate sampling sites for a watershed of interest.
 
 ## Installation
