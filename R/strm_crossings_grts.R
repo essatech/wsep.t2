@@ -66,7 +66,7 @@ strm_crossings_grts <- function(
                              "stratum_1")
 
   my_sample$site_id <- paste0("C_", 1:nrow(my_sample), "_", my_sample$strata)
-  my_sample$type <- "type_a"
+  my_sample$type <- "type_c"
   my_sample$length_m <- NA
 
   my_sample <- my_sample[, c("site_id", "strata", "type", "length_m")]
