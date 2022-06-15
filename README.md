@@ -152,7 +152,7 @@ Sample streams in close proximity to roads.
   ?road_proximity_sample
   
   type_b <- road_proximity_sample(
-    n = 40,
+    n = 60,
     strm = ca_strm,
     roads = roads,
     buffer_s1_m = 20,
@@ -168,6 +168,7 @@ Sample streams in close proximity to roads.
   names(type_b)
   site_type_b <- type_b$points
   line_segments <- type_b$line_segments
+  table(site_type_b$strata)
 
   # # Preview
   # library(mapview)
@@ -191,12 +192,23 @@ Sample streams in close proximity to roads.
 There are several site types for this component. This section provides guidance on how to generate the list of sample sites from the spatial layers above. Generate a GRTS sample from the list of stream crossings for each of the two strata (<3rd order vs. ≥ 3rd order).
 
 ```r
-  site_type_c <- strm_crossings_grts(
+  site_type_c_1 <- strm_crossings_grts(
     n = 40,
-    strm = ca_strm,
+    strm = ca_strm[which(ca_strm$strata == "stratum_1"), ],
     roads = roads,
     stream_order = 'STREAM_ORDER'
     )
+  
+  site_type_c_2 <- strm_crossings_grts(
+    n = 40,
+    strm = ca_strm[which(ca_strm$strata == "stratum_2"), ],
+    roads = roads,
+    stream_order = 'STREAM_ORDER'
+    )
+    
+  site_type_c <- rbind(site_type_c_1, site_type_c_2)
+  table(site_type_c$strata)
+  
   
   # -------------------------------------------
   # (Optional) visualize
