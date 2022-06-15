@@ -212,6 +212,7 @@ road_proximity_sample <- function(
     stop("bad coordinate breakdown...")
   }
 
+
   # Add column names
   first_pt_sf$site_id  <- ssamp$site_id
   first_pt_sf$strata   <- ssamp$strata
@@ -221,9 +222,25 @@ road_proximity_sample <- function(
   first_pt_sf <- first_pt_sf[, c("site_id", "strata", "type", "length_m")]
 
 
+  # Add on stream order
+  int_t <- suppressWarnings({ sf::st_intersection(strm, sf::st_buffer(first_pt_sf[, "site_id"], dist = 10)) })
+  add_order <- int_t[, c("site_id", stream_order)]
+  sf::st_geometry(add_order) <- NULL
+  add_order <- add_order[!(duplicated(add_order)), ]
+  add_order$stream_order <- as.numeric(add_order[, stream_order])
+  add_order <- add_order[, c("site_id", "stream_order")]
+
+
+  first_pt_sf_so <- merge(first_pt_sf, add_order,
+        by.x = "site_id",
+        by.y = "site_id",
+        all.x = TRUE,
+        all.y = FALSE)
+
+
   # Return sample points and sample lines
   ret_obj <- list()
-  ret_obj$points <- first_pt_sf
+  ret_obj$points <- first_pt_sf_so
   ret_obj$line_segments <- skeep_all
 
   print(paste0("Total sample sites: ", nrow(skeep_all)))

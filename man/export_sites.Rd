@@ -11,7 +11,8 @@ export_sites(
   site_type_c = NA,
   export_csv = TRUE,
   export_shp = TRUE,
-  export_kml = TRUE
+  export_kml = TRUE,
+  seperate_files = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ export_sites(
 \item{export_shp}{Boolean. Should a shp (shape file) file be exported to the output directory.}
 
 \item{export_kml}{Boolean. Should a kml file be exported to the output directory.}
+
+\item{seperate_files}{Boolean. Should seperate files be created for each site type.}
 }
 \value{
 Populates the export directory with output files

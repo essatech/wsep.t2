@@ -4,7 +4,12 @@
 \alias{grouped_random_sample}
 \title{Grouped Random Sample}
 \usage{
-grouped_random_sample(data = NA, group_name = "strata", n = 20)
+grouped_random_sample(
+  data = NA,
+  group_name = "strata",
+  n = 20,
+  stream_order = "STREAM_ORDER"
+)
 }
 \arguments{
 \item{data}{A data object of class \code{sf}.}
@@ -12,6 +17,8 @@ grouped_random_sample(data = NA, group_name = "strata", n = 20)
 \item{group_name}{String. Column name for the strata to sample across. It is assumed that \code{group_name} is \code{strata} and the values are \code{stratum_1} for stream segments less than 3rd order and \code{stratum_2} for stream segments 3rd order and greater.}
 
 \item{n}{Sample size n for each stratum}
+
+\item{stream_order}{Column name for stream order. Defaults to STREAM_ORDER.}
 }
 \value{
 A object of class \code{sf} of sample features.
@@ -21,4 +28,5 @@ Take a simple random sample by a group
 }
 \details{
 Note that there is no repeat sampling or replacement. If the sample size \code{n} exceeds the number of stream crossings in a stratum, then only the limited number of available crossings will be returned.
+Stream order should be labelled as STREAM_ORDER.
 }

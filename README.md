@@ -63,19 +63,22 @@ Prior to sampling sites across a watershed several pre-processing steps are nece
   
   # Then constrain the sampling frame to remove 1st order tribs less than 600m in length and clip the upper 300m off of other tributaries. see ?constrain_streams for details
   c_ctrm <- constrain_streams(strm = strm,
-                              length_remove = 600,
-                              length_trim = 300)
+                              length_remove = 500,
+                              length_trim = 200)
   
-  # Remove lakes and other lotic reaches. Consider removing any other lakes manually or through a simple filter
+  # Remove lakes and other lotic reaches.
+  # Consider removing any other lakes manually or through a simple filter
   c_strm <- remove_lentic_bcfwa(strm = c_ctrm,
                                 EDGE_TYPE = "EDGE_TYPE")
   
-  # Remove alpine areas - In this example set to all segments over 800 m (adjust for your region)
+  # Remove alpine areas
+  # In this example set to all segments over 800 m (adjust for your region)
   ca_strm <- remove_alpine_bcfwa(strm = c_strm,
                                  elevation_threshold = 800)
   
   
-  # (Optional) Visualize original (raw) and constrained streams. Finalize and adjust with any additional filters
+  # (Optional) Visualize original (raw) and constrained streams.
+  # Finalize and adjust with any additional filters
   strm1_plot <- sf::st_zm(strm)
   strm2_plot <- sf::st_zm(ca_strm)
   plot(sf::st_geometry(strm1_plot), col = "lightgrey",
@@ -113,7 +116,9 @@ Site Type and strata: Generate a random sample from the list of stream crossings
   # Take a random sample of crossings by strata
   site_type_a <- grouped_random_sample(data = crossings,
                                        group_name = "strata",
-                                       n = 20)
+                                       n = 40,
+                                       stream_order = "STREAM_ORDER"
+                                       )
   
   # -------------------------------------------
   # (Optional) visualize
@@ -147,13 +152,13 @@ Sample streams in close proximity to roads.
   ?road_proximity_sample
   
   type_b <- road_proximity_sample(
-    n = 20,
+    n = 40,
     strm = ca_strm,
     roads = roads,
     buffer_s1_m = 20,
     buffer_s2_m = 40,
-    buffer_crossings_m = 30, # 100m
-    small_strm_segment_m = 20, # 50m
+    buffer_crossings_m = 50, # 100m
+    small_strm_segment_m = 30, # 50m
     stream_order = "STREAM_ORDER"
   )
   # Distances adjusted to provide better fit for urban watershed
@@ -162,6 +167,11 @@ Sample streams in close proximity to roads.
   # Get the points object
   names(type_b)
   site_type_b <- type_b$points
+  line_segments <- type_b$line_segments
+
+  # # Preview
+  # library(mapview)
+  # mapview(list(site_type_b, line_segments))
   
   # -------------------------------------------
   # (Optional) visualize
@@ -181,7 +191,12 @@ Sample streams in close proximity to roads.
 There are several site types for this component. This section provides guidance on how to generate the list of sample sites from the spatial layers above. Generate a GRTS sample from the list of stream crossings for each of the two strata (<3rd order vs. ≥ 3rd order).
 
 ```r
-  site_type_c <- strm_crossings_grts(n = 20, strm = ca_strm, roads = roads, stream_order = 'STREAM_ORDER')
+  site_type_c <- strm_crossings_grts(
+    n = 40,
+    strm = ca_strm,
+    roads = roads,
+    stream_order = 'STREAM_ORDER'
+    )
   
   # -------------------------------------------
   # (Optional) visualize

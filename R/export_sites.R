@@ -13,6 +13,7 @@
 #' @param export_csv Boolean. Should a csv file be exported to the output directory.
 #' @param export_shp Boolean. Should a shp (shape file) file be exported to the output directory.
 #' @param export_kml Boolean. Should a kml file be exported to the output directory.
+#' @param seperate_files Boolean. Should seperate files be created for each site type.
 #'
 #' @return
 #' Populates the export directory with output files
@@ -26,7 +27,8 @@ export_sites <- function(output_dir = NA,
                          site_type_c = NA,
                          export_csv = TRUE,
                          export_shp = TRUE,
-                         export_kml = TRUE) {
+                         export_kml = TRUE,
+                         seperate_files = TRUE) {
 
 
 
@@ -45,19 +47,19 @@ export_sites <- function(output_dir = NA,
   }
 
   site_type_a$length_m <- NA
-  sta <- site_type_a[, c("site_id", "strata", "type", "length_m")]
+  sta <- site_type_a[, c("site_id", "strata", "type", "length_m", "stream_order")]
   stb <- type_b$points
-  stb <- stb[, c("site_id", "strata", "type", "length_m")]
+  stb <- stb[, c("site_id", "strata", "type", "length_m", "stream_order")]
 
   stc <- site_type_c
-  stc <- stc[, c("site_id", "strata", "type", "length_m")]
+  stc <- stc[, c("site_id", "strata", "type", "length_m", "stream_order")]
 
 
   rename_geometry <- function(g, name) {
     current = attr(g, "sf_column")
     names(g)[names(g)==current] = name
     sf::st_geometry(g)=name
-    g
+    return(g)
   }
 
   sta <- rename_geometry(sta, "geomf")
@@ -100,9 +102,20 @@ export_sites <- function(output_dir = NA,
   asd$latitude <- cll$Y
   asd$longitude <- cll$X
 
+  asd <- asd[order(asd$type, asd$strata), ]
+
 
   if(export_csv) {
-    utils::write.csv(asd, file = paste0(output_dir, "sites.csv"), na = "NA", row.names = FALSE)
+    if(seperate_files) {
+      asd_a <- asd[which(asd$type == "type_a"), ]
+      utils::write.csv(asd_a, file = paste0(output_dir, "sites_type_a.csv"), na = "", row.names = FALSE)
+      asd_b <- asd[which(asd$type == "type_b"), ]
+      utils::write.csv(asd_b, file = paste0(output_dir, "sites_type_b.csv"), na = "", row.names = FALSE)
+      asd_c <- asd[which(asd$type == "type_c"), ]
+      utils::write.csv(asd_c, file = paste0(output_dir, "sites_type_c.csv"), na = "", row.names = FALSE)
+    } else {
+      utils::write.csv(asd, file = paste0(output_dir, "sites.csv"), na = "", row.names = FALSE)
+    }
   }
 
 
@@ -113,13 +126,45 @@ export_sites <- function(output_dir = NA,
 
 
   if(export_shp) {
-    suppressWarnings({ sf::st_write(sites, dsn = paste0(output_dir, "sites.shp"), delete_dsn = TRUE) })
+    if(seperate_files) {
+      sites_a <- sites[which(sites$type == "type_a"), ]
+      suppressWarnings({ sf::st_write(sites_a, dsn = paste0(output_dir, "sites_type_a.shp"), delete_dsn = TRUE) })
+
+      sites_b <- sites[which(sites$type == "type_b"), ]
+      suppressWarnings({ sf::st_write(sites_b, dsn = paste0(output_dir, "sites_type_b.shp"), delete_dsn = TRUE) })
+
+      sites_c <- sites[which(sites$type == "type_c"), ]
+      suppressWarnings({ sf::st_write(sites_c, dsn = paste0(output_dir, "sites_type_c.shp"), delete_dsn = TRUE) })
+    } else {
+      suppressWarnings({ sf::st_write(sites, dsn = paste0(output_dir, "sites.shp"), delete_dsn = TRUE) })
+
+    }
     suppressWarnings({ sf::st_write(segments, dsn = paste0(output_dir, "segments.shp"), delete_dsn = TRUE) })
   }
 
+
+
+
   if(export_kml) {
-    suppressWarnings({ sf::st_write(sites, dsn = paste0(output_dir, "sites.kml"), delete_dsn = TRUE) })
+
+
+    if(seperate_files) {
+      sites_a <- sites[which(sites$type == "type_a"), ]
+      suppressWarnings({ sf::st_write(sites_a, dsn = paste0(output_dir, "sites_type_a.kml"), delete_dsn = TRUE) })
+
+      sites_b <- sites[which(sites$type == "type_b"), ]
+      suppressWarnings({ sf::st_write(sites_b, dsn = paste0(output_dir, "sites_type_b.kml"), delete_dsn = TRUE) })
+
+      sites_c <- sites[which(sites$type == "type_c"), ]
+      suppressWarnings({ sf::st_write(sites_c, dsn = paste0(output_dir, "sites_type_c.kml"), delete_dsn = TRUE) })
+
+    } else {
+      suppressWarnings({ sf::st_write(sites, dsn = paste0(output_dir, "sites.kml"), delete_dsn = TRUE) })
+
+    }
+
     suppressWarnings({ sf::st_write(segments, dsn = paste0(output_dir, "segments.kml"), delete_dsn = TRUE) })
+
   }
 
 

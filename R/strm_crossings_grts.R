@@ -33,6 +33,7 @@ strm_crossings_grts <- function(
   if(!(stream_order %in% colnames(strm))) {
     stop(paste0("Could not find a column named ", stream_order, ". Check stream_order argument"))
   }
+
   vals <- strm[, stream_order]
   sf::st_geometry(vals) <- NULL
   vals <- vals[, 1]
@@ -41,16 +42,22 @@ strm_crossings_grts <- function(
 
 
   # Recreate stream road crossings
-  sc2 <- suppressWarnings({ sf::st_intersection(roads, strm) })
-  sc2$tmp_id <- 1:nrow(sc2)
-  sc2 <- suppressWarnings({ sf::st_cast(sc2, 'POINT') })
-  sc2 <- sc2[!(duplicated(sc2$tmp_id)), ]
+
+  # Adjustment from Darcy to use line
+  # segments instead of crossings
+  # sc2 <- suppressWarnings({ sf::st_intersection(roads, strm) })
+  # sc2$tmp_id <- 1:nrow(sc2)
+  # sc2 <- suppressWarnings({ sf::st_cast(sc2, 'POINT') })
+  # sc2 <- sc2[!(duplicated(sc2$tmp_id)), ]
+
+  sc2 <- sf::st_zm(strm)
 
   # Cant sample more than available
   if(nrow(sc2) < n) {
     n <- nrow(sc2)
   }
 
+  set.seed(123)
   # Generate GRTS sample
   grts <- spsurvey::grts(
     sframe = sc2,
@@ -65,11 +72,13 @@ strm_crossings_grts <- function(
                              "stratum_2",
                              "stratum_1")
 
+  my_sample$stream_order <- my_sample$tmp_stream_order
+
   my_sample$site_id <- paste0("C_", 1:nrow(my_sample), "_", my_sample$strata)
   my_sample$type <- "type_c"
   my_sample$length_m <- NA
 
-  my_sample <- my_sample[, c("site_id", "strata", "type", "length_m")]
+  my_sample <- my_sample[, c("site_id", "strata", "type", "length_m", "stream_order")]
 
 
   return(my_sample)
