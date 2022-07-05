@@ -277,14 +277,20 @@ print(df2)
 
 ```
 
-
-| Strata    | unconstrained (m) | constrained (m) |
+Table 1: Stream length summary by strata and stream type
+| Strata    | Unconstrained (m) | Constrained (m) |
 |-----------|---------------|-------------|
-| stratum 1 | 326,267        | 230,664      |
+| Stratum 1 | 326,267        | 230,664      |
 | stratum 2 | 102,614        | 94,700       |
-| total     | 428,881        | 325,364      |
-Table: Stream length summary by strata
+| Total     | 428,881        | 325,364      |
 
+
+Table 2: Stream-road crossing summary by strata and stream type 
+| Strata    | Unconstrained (#) | Constrained (#) |
+|-----------|---------------|-------------|
+| Stratum 1 | 436           | 314         |
+| Stratum 2 | 75            | 69          |
+| Total     | 511           | 383         |
 
 
 ## Additional Resources ##
