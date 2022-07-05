@@ -258,23 +258,32 @@ Finally, when all the sampling frames (above) have been generated it is possible
 ```r
 # Generate a summary of the sampling frame by strata
 # For stream lengths
-sample_frame_summary(
+df1 <- sample_frame_summary(
   strm = strm,
   constrained_strm = ca_strm,
   roads = roads,
   stream_order = "STREAM_ORDER",
   summary_type = "stream_lengths")
+print(df1)
   
 # and stream crossings
-sample_frame_summary(
+df2 <- sample_frame_summary(
   strm = strm,
   constrained_strm = ca_strm,
   roads = roads,
   stream_order = "STREAM_ORDER",
   summary_type = "stream_crossings")
+print(df2)
 
 ```
 
+
+| Strata    | unconstrained (m) | constrained (m) |
+|-----------|---------------|-------------|
+| stratum 1 | 326,267        | 230,664      |
+| stratum 2 | 102,614        | 94,700       |
+| total     | 428,881        | 325,364      |
+Table: Stream length summary by strata
 
 
 
