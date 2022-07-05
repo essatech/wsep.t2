@@ -1,8 +1,3 @@
----
-output:
-  html_document: default
-  word_document: default
----
 # wsep.t2 #
 ## *The Watershed Status Evaluation Protocol - Tier 2 R-Package*
 
