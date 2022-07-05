@@ -223,7 +223,11 @@ road_proximity_sample <- function(
 
 
   # Add on stream order
-  int_t <- suppressWarnings({ sf::st_intersection(strm, sf::st_buffer(first_pt_sf[, "site_id"], dist = 10)) })
+  int_t <- suppressWarnings({ sf::st_intersection(strm,
+                                                  sf::st_buffer(first_pt_sf[, "site_id"],
+                                                                dist = 10))
+    })
+
   add_order <- int_t[, c("site_id", stream_order)]
   sf::st_geometry(add_order) <- NULL
   add_order <- add_order[!(duplicated(add_order)), ]
@@ -236,6 +240,9 @@ road_proximity_sample <- function(
         by.y = "site_id",
         all.x = TRUE,
         all.y = FALSE)
+
+  # order by stream order then site ID
+  first_pt_sf_so <- first_pt_sf_so[order(first_pt_sf_so$stream_order), ]
 
 
   # Return sample points and sample lines

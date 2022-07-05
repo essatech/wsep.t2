@@ -22,6 +22,7 @@ grouped_random_sample <- function(data = NA, group_name = "strata", n = 20, stre
   if(!(stream_order %in% colnames(data))) {
     stop(paste0("Could not find a column named ", stream_order, ". Check stream_order argument"))
   }
+
   vals <- data[, stream_order]
   sf::st_geometry(vals) <- NULL
   vals <- vals[, 1]
@@ -38,6 +39,8 @@ grouped_random_sample <- function(data = NA, group_name = "strata", n = 20, stre
   data$tmp_group_name <- vals
   data$tmp_id <- 1:nrow(data)
 
+
+  # Split by each stratum and then sample without replacement
   stdf <- data %>% dplyr::group_by(tmp_group_name) %>%
     dplyr::slice_sample(n = n, replace = TRUE)
 
@@ -45,8 +48,10 @@ grouped_random_sample <- function(data = NA, group_name = "strata", n = 20, stre
   site_types <- site_types[which(!(duplicated(site_types$tmp_id))), ]
 
   site_types$tmp_id <- NULL
-
   site_types <- sf::st_zm(site_types)
+
+  # Sort by strata
+  site_types <- site_types[order(site_types$tmp_stream_order), ]
 
   # Make unique name
   site_types$site_id <- paste0("A_", 1:nrow(site_types),
