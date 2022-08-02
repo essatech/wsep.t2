@@ -1,14 +1,14 @@
 #' @title Remove Lentic Reaches BCFWA
 #'
 #' @description
-#' Remove lakes and lentic waterbodies within in BCFWA stream network
+#' Remove lakes and lentic waterbodies within in BCFWA stream network.
 #'
 #' @details
 #' Lakes and lentic wetlands should be removed from the streamline
 #' sampling frame to avoid having a sample point fall in the middle of a
 #' stationary water body. If the streamline network being used originates from
-#'  the BC Freshwater Atlas then it is possible to the `EDGE_TYPE` column to
-#'  keep or retain lotic (stream) reaches and drop lotic (lake/wetland areas).
+#'  the BC Freshwater Atlas, then it is possible to the `EDGE_TYPE` column to
+#'  keep lotic stream reaches and drop lotic (lake/wetland areas).
 #'
 #' @param strm A streamlines dataset of class `sf` from the BCFWA.
 #' @param EDGE_TYPE String. Column name for the `EDGE_TYPE` in the streamline
