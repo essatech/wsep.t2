@@ -13,7 +13,7 @@
 #' @param export_csv Boolean. Should a csv file be exported to the output directory.
 #' @param export_shp Boolean. Should a shp (shape file) file be exported to the output directory.
 #' @param export_kml Boolean. Should a kml file be exported to the output directory.
-#' @param seperate_files Boolean. Should seperate files be created for each site type.
+#' @param seperate_files Boolean. Should seperate files be created for each site type...
 #'
 #' @return
 #' Populates the export directory with output files

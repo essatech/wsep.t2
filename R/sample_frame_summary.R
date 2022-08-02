@@ -14,7 +14,7 @@
 #' @importFrom magrittr %>%
 #'
 #' @return
-#' A summary table according to the `summary_type`.
+#' A summary table according to the `summary_type`...
 #'
 #'
 #' @export

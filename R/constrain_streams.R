@@ -5,7 +5,7 @@
 #'
 #' @details
 #' There is some lack of correspondence between the tangible,
-#' physical population of stream reaches and the BC Freshwater Atlas.
+#' physical population of stream reaches and the BC Freshwater Atlas...
 #' Two potential sources of non-correspondence are incomplete coverage
 #' (i.e., there are streams in the landscape that do not have
 #' corresponding mapped depictions in the 1:20K sample frame) and
