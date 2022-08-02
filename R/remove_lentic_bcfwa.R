@@ -12,7 +12,7 @@
 #'
 #' @param strm A streamlines dataset of class `sf` from the BCFWA.
 #' @param EDGE_TYPE String. Column name for the `EDGE_TYPE` in the streamline
-#' dataset. See BCFWA User Guide for details
+#' dataset. See BCFWA User Guide for details.
 #'
 #' @return
 #' An streamlines dataset of class `sf` with lotic reaches removed

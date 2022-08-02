@@ -1,7 +1,7 @@
 #' Tsolum Roads
 #'
 #' Sample road lines dataset for the Tsolum River watershed near
-#' Courtenay British Columbia. Used in a tutorial for the `wsep.t2`
+#' Courtenay British Columbia. Used in the tutorial for the `wsep.t2`
 #' (WSEP Tier II) R-package.
 #'
 #' @docType data
