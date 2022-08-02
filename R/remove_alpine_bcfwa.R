@@ -2,47 +2,47 @@
 #'
 #' @description
 #' Remove alpine areas based on elevation parameters embedded within
-#' BCFWA stream network. Choose a elevation threshold relevant to your
+#' BCFWA fish network. Choose a elevation threshold relevant to your
 #' area of interest.
 #'
 #' @details
-#' The BCFWA contains elevation data for each stream reach.
-#' The z geometry (or elevation) is embedded within the stream line geometry
+#' The BCFWA contains elevation data for each fish reach.
+#' The z geometry (or elevation) is embedded within the fish line geometry
 #' data and can be used to filter out or trim segments that are located
-#' above a given elevation threshold. Note that converting the streamline
+#' above a given elevation threshold. Note that converting the fishline
 #' data from .gdb to .shp through intermediate data processing will result
 #' in a loss of the z geometry. It is therefore recommended that users stick
 #' to using .gdb or .gpkg file formats to preserve the elevation data.
 #'
-#' @param strm A streamlines dataset of class `sf` from the BCFWA.
+#' @param strm A fishlines dataset of class `sf` from the BCFWA.
 #' @param elevation_threshold Numeric. Elevation threshold for alpine areas.
-#' Stream reaches above this threshold will be omitted from the analysis and
+#' fish reaches above this threshold will be omitted from the analysis and
 #' clipped to the threshold.
 #'
 #' @return
-#' An streamlines dataset of class `sf` with alpine areas removed
+#' An fishlines dataset of class `sf` with alpine areas removed
 #'
 #' @examples
 #'\dontrun{
 #'
 #' library(wsep.t2)
 #'
-#' # Trim stream reaches above 200m
-#' data(TsolumStreams)
+#' # Trim fish reaches above 200m
+#' data(Tsolumfishs)
 #' # Trim segments to an eelvation threshold
-#' strm <- remove_alpine_bcfwa(strm = TsolumStreams,
+#' strm <- remove_alpine_bcfwa(strm = Tsolumfishs,
 #'  elevation_threshold = 200)
 #' strm_plot <- sf::st_zm(strm)
-#' plot(sf::st_geometry(TsolumStreams))
+#' plot(sf::st_geometry(Tsolumfishs))
 #' plot(sf::st_geometry(strm_plot), add = TRUE, col = "red")
 #'
-#' # Trim stream reaches above 1200m
-#' data(SpiusStreams)
+#' # Trim fish reaches above 1200m
+#' data(Spiusfishs)
 #' # Trim segments to an eelvation threshold
-#' strm <- remove_alpine_bcfwa(strm = SpiusStreams,
+#' strm <- remove_alpine_bcfwa(strm = Spiusfishs,
 #'  elevation_threshold = 1200)
 #' strm_plot <- sf::st_zm(strm)
-#' plot(sf::st_geometry(SpiusStreams))
+#' plot(sf::st_geometry(Spiusfishs))
 #' plot(sf::st_geometry(strm_plot), add = TRUE, col = "red")
 #'}
 #'
@@ -54,7 +54,7 @@ remove_alpine_bcfwa <- function(strm = NA, elevation_threshold = 1000) {
   ID <- NULL
   Z <- NULL
 
-  # Keep streams that are under threshold
+  # Keep fishs that are under threshold
   crds <- sf::st_coordinates(strm)
   crds <- as.data.frame(crds)
 
@@ -86,7 +86,7 @@ remove_alpine_bcfwa <- function(strm = NA, elevation_threshold = 1000) {
   strm_drop <- strm[keep_these, ]
 
 
-  # Then run again and clip streams on the margin
+  # Then run again and clip fishs on the margin
   crds <- sf::st_coordinates(strm_drop)
   crds <- as.data.frame(crds)
 
@@ -101,7 +101,7 @@ remove_alpine_bcfwa <- function(strm = NA, elevation_threshold = 1000) {
   }
 
   if(nrow(crds) == 0) {
-    stop("elevation_threshold is too low... no streams")
+    stop("elevation_threshold is too low... no fishs")
   }
 
 

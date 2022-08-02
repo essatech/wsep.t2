@@ -1,48 +1,48 @@
-#' @title Constrain Streams
+#' @title Constrain fishs
 #'
 #' @description
-#' Constrains the streamline layer
+#' Constrains the fishline layer
 #'
 #' @details
 #' There is some lack of correspondence between the tangible,
-#' physical population of stream reaches and the BC Freshwater Atlas.
+#' physical population of fish reaches and the BC Freshwater Atlas.
 #' Two potential sources of non-correspondence are incomplete coverage
-#' (i.e., there are streams in the landscape that do not have
+#' (i.e., there are fishs in the landscape that do not have
 #' corresponding mapped depictions in the 1:20K sample frame) and
-#' over-coverage (i.e., there may be stream traces indicated that do
-#' not correspond to flowing streams in the field, particularly at the
-#' upper end of first order streams) (Stevens 2002). In order to minimize
+#' over-coverage (i.e., there may be fish traces indicated that do
+#' not correspond to flowing fishs in the field, particularly at the
+#' upper end of first order fishs) (Stevens 2002). In order to minimize
 #' the frequency of encountering a non-classified drainage (NCD) in the field,
-#' the sample
+#' the sample.........
 #' frame for is constrained by:
 #' \itemize{
-#'  \item{removing 1st order streams that are less than 500 m in length and}
-#'  \item{removing the upper 200 m  of remaining 1st order streams depicted by
+#'  \item{removing 1st order fishs that are less than 500 m in length and}
+#'  \item{removing the upper 200 m  of remaining 1st order fishs depicted by
 #'  the 1:20K GIS layer}
 #' }
-#' This restriction will not eliminate NCDs,
+#' This restriction will not eliminate NCDs,.....
 #' particularly for interior watersheds where NCDs are not restricted to
-#' the upper end of the first order streams.
+#' the upper end of the first order fishs.
 #'
-#' @param strm A streamlines dataset of class `sf` from the BCFWA.
+#' @param strm A fishlines dataset of class `sf` from the BCFWA.
 #' @param length_remove Numeric. Length in meters of first
 #' order tributaries that should be removed. Defaults to 500m.
-#' @param length_trim Numeric. Length in meters of upstream portion of
+#' @param length_trim Numeric. Length in meters of upfish portion of
 #' first order tributaries that should be removed. Defaults to 200m.
 #' @param verbose Boolean. Should function be run in verbose mode. Defaults to `FALSE`.
 #' @importFrom magrittr %>%
 #'
 #' @return
-#' An constrained streamlines dataset of class `sf`.
+#' An constrained fishlines dataset of class `sf`.
 #'
 #' @examples
 #'\dontrun{
-#' constrain_streams()
+#' constrain_fishs()
 #'}
 #'
 #'
 #' @export
-constrain_streams <- function(strm = NA,
+constrain_fishs <- function(strm = NA,
                               length_remove = 500,
                               length_trim = 200,
                               verbose = FALSE) {
@@ -93,14 +93,14 @@ constrain_streams <- function(strm = NA,
   strm <- suppressWarnings({ sf::st_cast(strm, "LINESTRING") })
 
 
-  # Drop all isolated streams not on the network
+  # Drop all isolated fishs not on the network
   int <- sf::st_intersects(strm, strm)
   strm$int_all <- unlist(lapply(int, length))
   # Must touch more than self
   strm <- strm[which(strm$int_all > 1), ]
 
 
-  # Add global ID for streamline reaches
+  # Add global ID for fishline reaches
   strm$strm_id <- 1:nrow(strm)
 
   #-----------------------------------------
@@ -136,7 +136,7 @@ constrain_streams <- function(strm = NA,
   # ints 3 is confluence
 
   #---------------------------------------------
-  # Work through each tip and trim the streams
+  # Work through each tip and trim the fishs
   #---------------------------------------------
   # Prep igraph object
 
@@ -209,9 +209,9 @@ constrain_streams <- function(strm = NA,
     # -------------------------------------------
     # Determine if entire segment should be cut
     # -------------------------------------------
-    target_streams <- strm[which(strm$strm_id %in% strm_ids), ]
+    target_fishs <- strm[which(strm$strm_id %in% strm_ids), ]
 
-    if(sum(target_streams$strm_lengths_m) < length_remove) {
+    if(sum(target_fishs$strm_lengths_m) < length_remove) {
       # Remove entire segment
       strm <- strm[which(!(strm$strm_id %in% strm_ids)), ]
       next
@@ -229,7 +229,7 @@ constrain_streams <- function(strm = NA,
     }
 
     # Be sure to order by node path
-    target_streams <- target_streams[match(strm_ids, target_streams$strm_id), ]
+    target_fishs <- target_fishs[match(strm_ids, target_fishs$strm_id), ]
 
     trim_remain <- length_trim
     line_index <- 1
@@ -239,18 +239,18 @@ constrain_streams <- function(strm = NA,
     while(trim_remain >= 0) {
 
       # Only cut where you have to
-      this_length <- target_streams$strm_lengths_m[line_index]
+      this_length <- target_fishs$strm_lengths_m[line_index]
 
       if(this_length < trim_remain) {
         # Drop from parent object
-        drop_strm_id <- target_streams$strm_id[line_index]
+        drop_strm_id <- target_fishs$strm_id[line_index]
         strm <- strm[which(strm$strm_id != drop_strm_id), ]
         line_index <- line_index + 1
         trim_remain <- trim_remain - this_length
         next
       }
 
-      this_line <- target_streams[line_index, ]
+      this_line <- target_fishs[line_index, ]
       this_line_conv <- sf::st_zm(this_line)
       this_line_sp <- sf::as_Spatial(this_line_conv)
 
@@ -314,7 +314,7 @@ constrain_streams <- function(strm = NA,
 
 
   }
-  # end of first order stream loop
+  # end of first order fish loop
   # -------------------------------------------
 
   # Clean up
