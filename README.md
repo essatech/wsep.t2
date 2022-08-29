@@ -14,7 +14,7 @@ The WSEP Tier 2 field sampling package uses a probabilistic sample design to sel
 
 ## Installation
 
-The easiest way to install the `wsep.t2` package is from within the [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) using `remotes::install_github()`. At this time the package has not been published to CRAN so the default `install.packages()` will not work. Instead, use remotes (or devtools) to install the package directly from GitHub:
+The easiest way to install the `wsep.t2` package is from within the [RStudio IDE](https://www.rstudio.com/products/rstudio/download/) using `remotes::install_github()`. At this time the package has not been published to CRAN so the default `install.packages()` will not work. Instead, use remotes [or devtools] to install the package directly from GitHub:
 
 ``` r
 # You may need to install remotes
