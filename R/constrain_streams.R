@@ -197,6 +197,7 @@ constrain_streams <- function(strm = NA,
                                     output = "vpath") })
 
     pl <- unlist(lapply(spath$vpath, length))
+
     # Shortest path
     this_path <- spath$vpath[which(pl == min(pl))][[1]]
     strm_ids <- as.numeric(names(this_path))

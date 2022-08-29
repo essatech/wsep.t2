@@ -22,7 +22,7 @@ export_sites(
 
 \item{type_b}{Sample Sites of Type B and line segments. Object returned from \code{road_proximity_sample()}.}
 
-\item{site_type_c}{Sample Sites Type C. sf data frame returned from \code{strm_crossings_grts()}}
+\item{site_type_c}{Sample Sites Type C. sf data frame returned from \code{strm_grts()}}
 
 \item{export_csv}{Boolean. Should a csv file be exported to the output directory.}
 

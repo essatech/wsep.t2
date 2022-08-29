@@ -47,10 +47,10 @@ test_that("stream-constraint-works", {
 
 
   # Try parsing down original dataset randomly
-  strm_sub <- strm[sample(nrow(strm), 200), ]
+  strm_sub <- strm[1:200, ]
   # then see if constrain still works
   cs4 <- constrain_streams(strm = strm_sub)
-  # plot(st_geometry(cs4))
+  # plot(sf::st_geometry(cs4))
   cs4$length_m <- sf::st_length(cs4)
   sum4 <- as.numeric(sum(cs4$length_m))
   testthat::expect_true(sum3 > sum4)

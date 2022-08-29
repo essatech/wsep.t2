@@ -10,20 +10,20 @@ remove_lentic_bcfwa(strm = NA, EDGE_TYPE = "EDGE_TYPE")
 \item{strm}{A streamlines dataset of class \code{sf} from the BCFWA.}
 
 \item{EDGE_TYPE}{String. Column name for the \code{EDGE_TYPE} in the streamline
-dataset. See BCFWA User Guide for details}
+dataset. See BCFWA User Guide for details.}
 }
 \value{
 An streamlines dataset of class \code{sf} with lotic reaches removed
 }
 \description{
-Remove lakes and lentic waterbodies within in BCFWA stream network
+Remove lakes and lentic waterbodies within in BCFWA stream network.
 }
 \details{
 Lakes and lentic wetlands should be removed from the streamline
 sampling frame to avoid having a sample point fall in the middle of a
 stationary water body. If the streamline network being used originates from
-the BC Freshwater Atlas then it is possible to the \code{EDGE_TYPE} column to
-keep or retain lotic (stream) reaches and drop lotic (lake/wetland areas).
+the BC Freshwater Atlas, then it is possible to the \code{EDGE_TYPE} column to
+keep lotic stream reaches and drop lotic (lake/wetland areas).
 }
 \examples{
 \dontrun{

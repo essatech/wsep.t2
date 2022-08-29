@@ -9,7 +9,7 @@
 #' @param output_dir String. Local file path the an output directory on your computer.
 #' @param site_type_a Sample Sites Type A. sf data frame returned from `grouped_random_sample()`
 #' @param type_b Sample Sites of Type B and line segments. Object returned from `road_proximity_sample()`.
-#' @param site_type_c Sample Sites Type C. sf data frame returned from `strm_crossings_grts()`
+#' @param site_type_c Sample Sites Type C. sf data frame returned from `strm_grts()`
 #' @param export_csv Boolean. Should a csv file be exported to the output directory.
 #' @param export_shp Boolean. Should a shp (shape file) file be exported to the output directory.
 #' @param export_kml Boolean. Should a kml file be exported to the output directory.

@@ -1,30 +1,28 @@
-#' @title Stream Crossings GRTS Sample
+#' @title Stream GRTS Sample
 #'
 #' @description
-#' Generate a GRTS sample from the list of stream crossings.
+#' Generate a GRTS sample from stream segments.
 #'
 #' @details
-#' Generate a GRTS sample from the list of stream crossings.
+#' Generate a GRTS sample from stream segments.
 #' Part of Component 3 – Riparian. Site Type C.
 #' GRTS Generalized Random Tesselation Stratified sampling is achieved using the `grts` function in the `spsurvey` package.
 #' \itemize{
-#'  \item{Generate a GRTS sample from the list of stream crossings for each of the two strata (<3rd order vs. ≥ 3rd order.}
+#'  \item{Generate a GRTS sample from the stream segments for each of the two strata (<3rd order vs. ≥ 3rd order.}
 #'  \item{Create a field checklist with at least the key fields}
 #'  }
 #'
 #' @param n Sample size n for each stratum. Defaults to 20.
 #' @param strm A streamline data set of class `sf` from the BCFWA. Run `utm_projection()` first to ensure projection is in meters.
-#' @param roads A road network data set of class `sf`. Run `utm_projection()` first to ensure projection is in meters.
 #' @param stream_order String. Column name for stream order. Defaults to `STREAM_ORDER`. Rename as needed.
 #'
 #' @return
 #' A object of class `sf` of sample features.
 #'
 #' @export
-strm_crossings_grts <- function(
+strm_grts <- function(
   n = 20,
   strm = NA,
-  roads = NA,
   stream_order = 'STREAM_ORDER') {
 
 
@@ -42,7 +40,6 @@ strm_crossings_grts <- function(
 
 
   # Recreate stream road crossings
-
   # Adjustment from Darcy to use line
   # segments instead of crossings
   # sc2 <- suppressWarnings({ sf::st_intersection(roads, strm) })
@@ -58,6 +55,7 @@ strm_crossings_grts <- function(
   }
 
   set.seed(123)
+
   # Generate GRTS sample
   grts <- spsurvey::grts(
     sframe = sc2,

@@ -7,9 +7,8 @@
 Stable](https://img.shields.io/badge/lifecycle-stable.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![CRAN](http://www.r-pkg.org/badges/version/MNAI.CPBT)](https://cran.r-project.org/package=MNAI.CPBT)
 <!-- badges: end -->
-<!--
+
 [![Video Tutorial](https://img.youtube.com/vi/lt6KL8EK0OQ/0.jpg)](https://www.youtube.com/watch?v=lt6KL8EK0OQ)
- -->
 
 The WSEP Tier 2 field sampling package uses a probabilistic sample design to select sampling sites within a watershed. Each of the three components (fish passage, sediment delivery, and riparian/stream channel) use a different sample design; however, they share underlying spatial data layers. These spatial layers should be compiled and processed early on in any watershed assessment project to help inform reconnaissance and planning. The WSEP Tier 2 R-package (wsep.t2) can be used to help process and assemble the spatial data needed to generate sampling sites for a watershed of interest.
 
@@ -189,8 +188,10 @@ Note that road_proximity_sample() returns a list object with the sample points a
   road_plot <- sf::st_zm(roads)
   plot(sf::st_geometry(strm_plot), col = "darkblue", main = "Site Type B (road proximity)")
   plot(sf::st_geometry(road_plot), add = TRUE, col = "burlywood")
-  plot(sf::st_geometry(site_type_b), add = TRUE, col = ifelse(site_type_b$strata == "stratum_1", "black", "red"), pch = 19)
-  legend("topright", c("roads", "streams", "stratum 1", "stratum 2"), col = c("burlywood", "darkblue", "black", "red"), lwd = c(1, 1, NA, NA), pch = c(NA, NA, 19, 19))
+  plot(sf::st_geometry(site_type_b), add = TRUE, col = ifelse(site_type_b$strata == "stratum_1", "black", "red"), pch = 19, cex = 0.5)
+  plot(sf::st_geometry(line_segments), add = TRUE, col = ifelse(site_type_b$strata == "stratum_1", "black", "red"), lwd = 2.5)
+  legend("topright", c("roads", "streams", "stratum 1", "stratum 2"), col = c("burlywood", "darkblue", "black", "red"), lwd = c(1, 1, 2, 2), pch = c(NA, NA, 19, 19))
+  
 ```
 
 <img src='man/figures/site_type_b.PNG' align="center" height="450" style="padding: 10px;"/>
@@ -201,17 +202,15 @@ Note that road_proximity_sample() returns a list object with the sample points a
 Lastly, we can sample sites for the riparian component (Site Type C). Riparian sites are selected from each stratum using a spatially balanced design (GRTS, Stevens 2002) from the stream network (constrained version). We have to run the code with each stratum separately but will bind these together to create our site_type_c spatial dataframe. This function also takes a sample size (n), the stream dataset specified by stratum. 
 
 ```r
-  site_type_c_1 <- strm_crossings_grts(
+  site_type_c_1 <- strm_grts(
     n = 40,
     strm = ca_strm[which(ca_strm$strata == "stratum_1"), ],
-    roads = roads,
     stream_order = 'STREAM_ORDER'
     )
   
-  site_type_c_2 <- strm_crossings_grts(
+  site_type_c_2 <- strm_grts(
     n = 40,
     strm = ca_strm[which(ca_strm$strata == "stratum_2"), ],
-    roads = roads,
     stream_order = 'STREAM_ORDER'
     )
     
@@ -221,7 +220,7 @@ Lastly, we can sample sites for the riparian component (Site Type C). Riparian s
   
   # -------------------------------------------
   # (Optional) visualize
-  plot(sf::st_geometry(strm_plot), col = "darkblue", main = "Site Type C (riparian-crossings)")
+  plot(sf::st_geometry(strm_plot), col = "darkblue", main = "Site Type C (riparian)")
   plot(sf::st_geometry(road_plot), add = TRUE, col = "burlywood")
   plot(sf::st_geometry(site_type_c), add = TRUE, col = ifelse(site_type_b$strata == "stratum_1", "black", "red"), pch = 19)
   legend("topright", c("roads", "streams", "stratum 1", "stratum 2"), col = c("burlywood", "darkblue", "black", "red"), lwd = c(1, 1, NA, NA), pch = c(NA, NA, 19, 19))

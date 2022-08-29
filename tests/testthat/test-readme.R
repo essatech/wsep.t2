@@ -25,6 +25,7 @@ test_that("readme works", {
                           length_trim = 300)
 
 
+
   # Remove lakes and other lotic reaches
   c_strm <- remove_lentic_bcfwa(strm = c_ctrm,
                                  EDGE_TYPE = "EDGE_TYPE")
@@ -90,6 +91,7 @@ test_that("readme works", {
 
 
 
+
   # (Optional) visualize
   strm_plot <- sf::st_zm(ca_strm)
   road_plot <- sf::st_zm(roads)
@@ -148,7 +150,7 @@ test_that("readme works", {
          pch = c(NA, NA, 19, 19))
 
 
-  site_type_c <- strm_crossings_grts(n = 20, strm = ca_strm, roads = roads, stream_order = 'STREAM_ORDER')
+  site_type_c <- strm_grts(n = 20, strm = ca_strm, stream_order = 'STREAM_ORDER')
 
    plot(sf::st_geometry(strm_plot), col = "darkblue", main = "Site Type C (riparian-crossings)")
   plot(sf::st_geometry(road_plot), add = TRUE, col = "burlywood")
